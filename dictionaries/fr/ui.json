@@ -1,0 +1,105 @@
+{
+  "common": {
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "add": "Ajouter",
+    "edit": "Modifier",
+    "close": "Fermer",
+    "back": "Retour",
+    "next": "Suivant",
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succes",
+    "required": "Obligatoire",
+    "optional": "Facultatif"
+  },
+  "nav": {
+    "home": "Accueil",
+    "editor": "Editeur",
+    "templates": "Modeles",
+    "settings": "Parametres"
+  },
+  "editor": {
+    "title": "Editeur de CV",
+    "toolbar": {
+      "newCV": "Nouveau CV",
+      "import": "Importer",
+      "export": "Exporter",
+      "exportPDF": "Exporter PDF",
+      "exportJSON": "Exporter JSON",
+      "template": "Modele",
+      "format": "Format",
+      "language": "Langue",
+      "undo": "Annuler",
+      "redo": "Retablir",
+      "preview": "Apercu",
+      "autosaved": "Sauvegarde automatique",
+      "unsavedChanges": "Modifications non enregistrees"
+    },
+    "sections": {
+      "personalInfo": "Informations personnelles",
+      "summary": "Resume professionnel",
+      "experience": "Experience professionnelle",
+      "education": "Formation",
+      "skills": "Competences",
+      "languages": "Langues",
+      "certifications": "Certifications",
+      "projects": "Projets",
+      "references": "References"
+    },
+    "actions": {
+      "addExperience": "Ajouter une experience",
+      "addEducation": "Ajouter une formation",
+      "addSkill": "Ajouter une competence",
+      "addLanguage": "Ajouter une langue",
+      "addCertification": "Ajouter une certification",
+      "addProject": "Ajouter un projet",
+      "addReference": "Ajouter une reference",
+      "removeItem": "Supprimer",
+      "dragToReorder": "Glissez pour reorganiser",
+      "toggleVisibility": "Basculer la visibilite"
+    },
+    "empty": {
+      "experience": "Aucune experience ajoutee",
+      "education": "Aucune formation ajoutee",
+      "skills": "Aucune competence ajoutee",
+      "languages": "Aucune langue ajoutee",
+      "certifications": "Aucune certification ajoutee",
+      "projects": "Aucun projet ajoute",
+      "references": "Aucune reference ajoutee"
+    }
+  },
+  "format": {
+    "european": "Europeen (Europass)",
+    "canadian": "CV canadien"
+  },
+  "template": {
+    "modern": "Moderne",
+    "classic": "Classique",
+    "minimal": "Minimaliste"
+  },
+  "import": {
+    "title": "Importer un CV",
+    "description": "Telechargez un fichier JSON pour importer vos donnees de CV",
+    "selectFile": "Selectionner un fichier",
+    "dragDrop": "ou glissez-deposez",
+    "fileType": "Fichier JSON uniquement",
+    "success": "CV importe avec succes",
+    "error": "Echec de l'importation du CV",
+    "validationErrors": "Erreurs de validation trouvees"
+  },
+  "export": {
+    "title": "Exporter le CV",
+    "description": "Telechargez votre CV dans differents formats",
+    "generating": "Generation du PDF...",
+    "success": "Exportation reussie",
+    "error": "Echec de l'exportation"
+  },
+  "validation": {
+    "required": "{field} est obligatoire",
+    "invalidEmail": "Adresse email invalide",
+    "invalidUrl": "URL invalide",
+    "invalidDate": "Format de date invalide"
+  }
+}

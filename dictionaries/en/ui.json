@@ -1,0 +1,105 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "add": "Add",
+    "edit": "Edit",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "required": "Required",
+    "optional": "Optional"
+  },
+  "nav": {
+    "home": "Home",
+    "editor": "Editor",
+    "templates": "Templates",
+    "settings": "Settings"
+  },
+  "editor": {
+    "title": "CV Editor",
+    "toolbar": {
+      "newCV": "New CV",
+      "import": "Import",
+      "export": "Export",
+      "exportPDF": "Export PDF",
+      "exportJSON": "Export JSON",
+      "template": "Template",
+      "format": "Format",
+      "language": "Language",
+      "undo": "Undo",
+      "redo": "Redo",
+      "preview": "Preview",
+      "autosaved": "Autosaved",
+      "unsavedChanges": "Unsaved changes"
+    },
+    "sections": {
+      "personalInfo": "Personal Information",
+      "summary": "Professional Summary",
+      "experience": "Work Experience",
+      "education": "Education",
+      "skills": "Skills",
+      "languages": "Languages",
+      "certifications": "Certifications",
+      "projects": "Projects",
+      "references": "References"
+    },
+    "actions": {
+      "addExperience": "Add Experience",
+      "addEducation": "Add Education",
+      "addSkill": "Add Skill",
+      "addLanguage": "Add Language",
+      "addCertification": "Add Certification",
+      "addProject": "Add Project",
+      "addReference": "Add Reference",
+      "removeItem": "Remove",
+      "dragToReorder": "Drag to reorder",
+      "toggleVisibility": "Toggle visibility"
+    },
+    "empty": {
+      "experience": "No work experience added yet",
+      "education": "No education added yet",
+      "skills": "No skills added yet",
+      "languages": "No languages added yet",
+      "certifications": "No certifications added yet",
+      "projects": "No projects added yet",
+      "references": "No references added yet"
+    }
+  },
+  "format": {
+    "european": "European (Europass)",
+    "canadian": "Canadian Resume"
+  },
+  "template": {
+    "modern": "Modern",
+    "classic": "Classic",
+    "minimal": "Minimal"
+  },
+  "import": {
+    "title": "Import CV",
+    "description": "Upload a JSON file to import your CV data",
+    "selectFile": "Select file",
+    "dragDrop": "or drag and drop",
+    "fileType": "JSON file only",
+    "success": "CV imported successfully",
+    "error": "Failed to import CV",
+    "validationErrors": "Validation errors found"
+  },
+  "export": {
+    "title": "Export CV",
+    "description": "Download your CV in different formats",
+    "generating": "Generating PDF...",
+    "success": "Export successful",
+    "error": "Failed to export"
+  },
+  "validation": {
+    "required": "{field} is required",
+    "invalidEmail": "Invalid email address",
+    "invalidUrl": "Invalid URL",
+    "invalidDate": "Invalid date format"
+  }
+}
