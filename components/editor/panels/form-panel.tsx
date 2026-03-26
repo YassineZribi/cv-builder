@@ -9,6 +9,10 @@ import { ExperienceEditor } from "../sections/experience-editor"
 import { EducationEditor } from "../sections/education-editor"
 import { SkillsEditor } from "../sections/skills-editor"
 import { LanguagesEditor } from "../sections/languages-editor"
+import { CertificationsEditor } from "../sections/certifications-editor"
+import { ProjectsEditor } from "../sections/projects-editor"
+import { ReferencesEditor } from "../sections/references-editor"
+import { SectionManager } from "./section-manager"
 import type { Dictionary } from "@/lib/i18n/dictionaries"
 import type { Locale } from "@/lib/i18n/config"
 
@@ -23,9 +27,12 @@ export function FormPanel({ dictionary, locale }: FormPanelProps) {
 
   return (
     <div className="flex h-full flex-col">
-      <Tabs defaultValue="personalInfo" className="flex h-full flex-col">
-        <div className="border-b px-4">
-          <TabsList className="h-12 w-full justify-start gap-1 bg-transparent">
+      <Tabs
+        defaultValue={visibleSections[0]?.id ?? "personalInfo"}
+        className="flex h-full flex-col"
+      >
+        <div className="flex items-center gap-2 border-b px-4">
+          <TabsList className="h-12 flex-1 justify-start gap-1 overflow-x-auto bg-transparent">
             {visibleSections.map((section) => (
               <TabsTrigger
                 key={section.id}
@@ -36,6 +43,7 @@ export function FormPanel({ dictionary, locale }: FormPanelProps) {
               </TabsTrigger>
             ))}
           </TabsList>
+          <SectionManager dictionary={dictionary} />
         </div>
         <ScrollArea className="flex-1">
           <div className="p-4">
@@ -60,6 +68,15 @@ export function FormPanel({ dictionary, locale }: FormPanelProps) {
             </TabsContent>
             <TabsContent value="languages" className="mt-0">
               <LanguagesEditor dictionary={dictionary} locale={locale} />
+            </TabsContent>
+            <TabsContent value="certifications" className="mt-0">
+              <CertificationsEditor dictionary={dictionary} locale={locale} />
+            </TabsContent>
+            <TabsContent value="projects" className="mt-0">
+              <ProjectsEditor dictionary={dictionary} locale={locale} />
+            </TabsContent>
+            <TabsContent value="references" className="mt-0">
+              <ReferencesEditor dictionary={dictionary} locale={locale} />
             </TabsContent>
           </div>
         </ScrollArea>

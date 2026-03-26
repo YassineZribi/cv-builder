@@ -35,7 +35,9 @@
       "redo": "Retablir",
       "preview": "Apercu",
       "autosaved": "Sauvegarde automatique",
-      "unsavedChanges": "Modifications non enregistrees"
+      "unsavedChanges": "Modifications non enregistrees",
+      "manageSections": "Gerer les sections",
+      "manageSectionsDescription": "Afficher ou masquer les sections de votre CV"
     },
     "sections": {
       "personalInfo": "Informations personnelles",

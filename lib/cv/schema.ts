@@ -170,9 +170,9 @@ export const DEFAULT_SECTIONS: SectionConfig[] = [
   { id: "education", visible: true, order: 3 },
   { id: "skills", visible: true, order: 4 },
   { id: "languages", visible: true, order: 5 },
-  { id: "certifications", visible: false, order: 6 },
-  { id: "projects", visible: false, order: 7 },
-  { id: "references", visible: false, order: 8 },
+  { id: "certifications", visible: true, order: 6 },
+  { id: "projects", visible: true, order: 7 },
+  { id: "references", visible: true, order: 8 },
 ]
 
 // Complete CV Schema

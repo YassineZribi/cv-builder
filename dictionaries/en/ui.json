@@ -35,7 +35,9 @@
       "redo": "Redo",
       "preview": "Preview",
       "autosaved": "Autosaved",
-      "unsavedChanges": "Unsaved changes"
+      "unsavedChanges": "Unsaved changes",
+      "manageSections": "Manage Sections",
+      "manageSectionsDescription": "Show or hide sections in your CV"
     },
     "sections": {
       "personalInfo": "Personal Information",
