@@ -247,10 +247,11 @@ export function CVDocument({ cv, labels }: CVDocumentProps) {
               </Text>
               {cv.certifications.map((cert) => (
                 <View key={cert.id} style={styles.certItem}>
-                  <Text style={styles.certName}>{cert.name}</Text>
-                  <Text style={styles.textMuted}>
-                    {cert.issuer} • {formatDate(cert.date)}
+                  <Text style={styles.certName}>
+                    {cert.name}
+                    <Text style={styles.textMuted}> - {cert.issuer}</Text>
                   </Text>
+                  <Text style={styles.certDate}>{formatDate(cert.date)}</Text>
                 </View>
               ))}
             </View>
@@ -471,11 +472,20 @@ function createStyles(theme: ReturnType<typeof getTemplateTheme>) {
 
     // ─── Certifications ───────────────────────────────────────────────────────
     certItem: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "flex-start",
       marginBottom: 6,
     },
     certName: {
       fontSize: 10,
       fontFamily: theme.fonts.heading,
+      flex: 1,
+    },
+    certDate: {
+      fontSize: 9,
+      color: theme.colors.muted,
+      marginLeft: 8,
     },
 
     // ─── References ───────────────────────────────────────────────────────────
