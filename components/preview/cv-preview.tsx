@@ -122,7 +122,7 @@ export function CVPreview({ cv, template, dictionary }: CVPreviewProps) {
             <h2 className={templateStyles.sectionTitle}>
               {dictionary.ui.editor.sections.summary}
             </h2>
-            <p className="text-sm leading-relaxed whitespace-pre-line">
+            <p className="text-sm leading-relaxed whitespace-pre-line text-justify">
               {cv.personalInfo.summary}
             </p>
           </section>
@@ -153,7 +153,7 @@ export function CVPreview({ cv, template, dictionary }: CVPreviewProps) {
                     </span>
                   </div>
                   {exp.description && (
-                    <p className="text-sm mt-2 whitespace-pre-line">
+                    <p className="text-sm mt-2 whitespace-pre-line text-justify">
                       {exp.description}
                     </p>
                   )}

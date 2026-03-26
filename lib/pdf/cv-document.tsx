@@ -414,6 +414,7 @@ function createStyles(theme: ReturnType<typeof getTemplateTheme>) {
       fontSize: 10,
       lineHeight: 1.4,
       marginTop: 4,
+      textAlign: "justify",
     },
     textMuted: {
       fontSize: 9,
