@@ -89,7 +89,13 @@
     "fileType": "Fichier JSON uniquement",
     "success": "CV importé avec succès",
     "error": "Échec de l'importation du CV",
-    "validationErrors": "Erreurs de validation trouvées"
+    "validationErrors": "Erreurs de validation trouvées",
+    "errors": {
+      "invalidJson": "Format JSON invalide",
+      "unsupportedVersion": "Version du schéma non prise en charge",
+      "importFailed": "L'importation a échoué",
+      "invalidFileType": "Veuillez déposer un fichier JSON"
+    }
   },
   "export": {
     "title": "Exporter le CV",

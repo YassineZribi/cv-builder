@@ -89,7 +89,13 @@
     "fileType": "JSON file only",
     "success": "CV imported successfully",
     "error": "Failed to import CV",
-    "validationErrors": "Validation errors found"
+    "validationErrors": "Validation errors found",
+    "errors": {
+      "invalidJson": "Invalid JSON format",
+      "unsupportedVersion": "Unsupported schema version",
+      "importFailed": "Import failed",
+      "invalidFileType": "Please drop a JSON file"
+    }
   },
   "export": {
     "title": "Export CV",

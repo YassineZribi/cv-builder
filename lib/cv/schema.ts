@@ -3,137 +3,42 @@ import { z } from "zod"
 // Schema version for migrations
 export const SCHEMA_VERSION = 1
 
-// Reusable date schema (YYYY-MM format)
-const dateSchema = z
-  .string()
-  .regex(/^\d{4}-\d{2}$/, "Date must be in YYYY-MM format")
-  .optional()
+// Validation messages interface — implemented by cv.json["validation"]
+export interface ValidationMessages {
+  dateFormat: string
+  invalidEmail: string
+  firstNameRequired: string
+  lastNameRequired: string
+  companyRequired: string
+  positionRequired: string
+  institutionRequired: string
+  degreeRequired: string
+  skillNameRequired: string
+  languageNameRequired: string
+  certificationNameRequired: string
+  issuerRequired: string
+  projectNameRequired: string
+  referenceNameRequired: string
+}
 
-const urlSchema = z.string().url().optional().or(z.literal(""))
+const DEFAULT_VALIDATION_MESSAGES: ValidationMessages = {
+  dateFormat: "Date must be in YYYY-MM format",
+  invalidEmail: "Invalid email address",
+  firstNameRequired: "First name is required",
+  lastNameRequired: "Last name is required",
+  companyRequired: "Company name is required",
+  positionRequired: "Position is required",
+  institutionRequired: "Institution name is required",
+  degreeRequired: "Degree is required",
+  skillNameRequired: "Skill name is required",
+  languageNameRequired: "Language name is required",
+  certificationNameRequired: "Certification name is required",
+  issuerRequired: "Issuer is required",
+  projectNameRequired: "Project name is required",
+  referenceNameRequired: "Reference name is required",
+}
 
-// Contact Information
-const contactSchema = z.object({
-  email: z.string().email("Invalid email address"),
-  phone: z.string().optional(),
-  address: z.string().optional(),
-  city: z.string().optional(),
-  postalCode: z.string().optional(),
-  country: z.string().optional(),
-  linkedin: urlSchema,
-  github: urlSchema,
-  portfolio: urlSchema,
-  customLinks: z
-    .array(
-      z.object({
-        id: z.string().uuid(),
-        label: z.string(),
-        url: z.string().url(),
-      })
-    )
-    .default([]),
-})
-
-// Personal Information
-const personalInfoSchema = z.object({
-  firstName: z.string().min(1, "First name is required"),
-  lastName: z.string().min(1, "Last name is required"),
-  title: z.string().optional(),
-  photo: z.string().optional(),
-  summary: z.string().optional(),
-  contact: contactSchema,
-  // Europass-specific fields
-  dateOfBirth: z.string().optional(),
-  nationality: z.string().optional(),
-  gender: z
-    .enum(["male", "female", "other", "prefer-not-to-say"])
-    .optional(),
-})
-
-// Experience Entry
-const experienceEntrySchema = z.object({
-  id: z.string().uuid(),
-  company: z.string().min(1, "Company name is required"),
-  position: z.string().min(1, "Position is required"),
-  location: z.string().optional(),
-  startDate: dateSchema,
-  endDate: dateSchema.nullable(),
-  current: z.boolean().default(false),
-  description: z.string().optional(),
-  achievements: z.array(z.string()).default([]),
-  order: z.number(),
-})
-
-// Education Entry
-const educationEntrySchema = z.object({
-  id: z.string().uuid(),
-  institution: z.string().min(1, "Institution name is required"),
-  degree: z.string().min(1, "Degree is required"),
-  field: z.string().optional(),
-  location: z.string().optional(),
-  startDate: dateSchema,
-  endDate: dateSchema.nullable(),
-  current: z.boolean().default(false),
-  grade: z.string().optional(),
-  description: z.string().optional(),
-  order: z.number(),
-})
-
-// Skill
-const skillSchema = z.object({
-  id: z.string().uuid(),
-  name: z.string().min(1, "Skill name is required"),
-  level: z
-    .enum(["beginner", "intermediate", "advanced", "expert"])
-    .optional(),
-  category: z.string().optional(),
-  order: z.number(),
-})
-
-// Language with CEFR levels
-const languageSchema = z.object({
-  id: z.string().uuid(),
-  name: z.string().min(1, "Language name is required"),
-  proficiency: z.enum(["A1", "A2", "B1", "B2", "C1", "C2", "native"]),
-  order: z.number(),
-})
-
-// Certification
-const certificationSchema = z.object({
-  id: z.string().uuid(),
-  name: z.string().min(1, "Certification name is required"),
-  issuer: z.string().min(1, "Issuer is required"),
-  date: dateSchema,
-  expiryDate: dateSchema.nullable(),
-  credentialId: z.string().optional(),
-  url: urlSchema,
-  order: z.number(),
-})
-
-// Project
-const projectSchema = z.object({
-  id: z.string().uuid(),
-  name: z.string().min(1, "Project name is required"),
-  description: z.string().optional(),
-  url: urlSchema,
-  technologies: z.array(z.string()).default([]),
-  startDate: dateSchema,
-  endDate: dateSchema.nullable(),
-  order: z.number(),
-})
-
-// Reference
-const referenceSchema = z.object({
-  id: z.string().uuid(),
-  name: z.string().min(1, "Reference name is required"),
-  position: z.string().optional(),
-  company: z.string().optional(),
-  email: z.string().email().optional(),
-  phone: z.string().optional(),
-  relationship: z.string().optional(),
-  order: z.number(),
-})
-
-// Section configuration for visibility and ordering
+// Module-level schemas (no validation messages)
 const sectionConfigSchema = z.object({
   id: z.string(),
   visible: z.boolean().default(true),
@@ -162,6 +67,9 @@ export const sectionTypeSchema = z.enum([
   "references",
 ])
 
+// SectionConfig type (used by DEFAULT_SECTIONS below)
+export type SectionConfig = z.infer<typeof sectionConfigSchema>
+
 // Default section order
 export const DEFAULT_SECTIONS: SectionConfig[] = [
   { id: "personalInfo", visible: true, order: 0 },
@@ -175,49 +83,173 @@ export const DEFAULT_SECTIONS: SectionConfig[] = [
   { id: "references", visible: true, order: 8 },
 ]
 
-// Complete CV Schema
-export const cvSchema = z.object({
-  schemaVersion: z.number().default(SCHEMA_VERSION),
-  id: z.string().uuid(),
-  createdAt: z.string().datetime(),
-  updatedAt: z.string().datetime(),
+// Factory — builds the full CV Zod schema with localized validation messages
+function createCVSchemas(messages: ValidationMessages) {
+  const dateSchema = z
+    .string()
+    .regex(/^\d{4}-\d{2}$/, messages.dateFormat)
+    .optional()
 
-  // Metadata
-  format: cvFormatSchema,
-  template: templateSchema,
-  locale: localeSchema,
+  const urlSchema = z.string().url().optional().or(z.literal(""))
 
-  // Content
-  personalInfo: personalInfoSchema,
-  experience: z.array(experienceEntrySchema).default([]),
-  education: z.array(educationEntrySchema).default([]),
-  skills: z.array(skillSchema).default([]),
-  languages: z.array(languageSchema).default([]),
-  certifications: z.array(certificationSchema).default([]),
-  projects: z.array(projectSchema).default([]),
-  references: z.array(referenceSchema).default([]),
+  const contactSchema = z.object({
+    email: z.string().email(messages.invalidEmail),
+    phone: z.string().optional(),
+    address: z.string().optional(),
+    city: z.string().optional(),
+    postalCode: z.string().optional(),
+    country: z.string().optional(),
+    linkedin: urlSchema,
+    github: urlSchema,
+    portfolio: urlSchema,
+    customLinks: z
+      .array(
+        z.object({
+          id: z.string().uuid(),
+          label: z.string(),
+          url: z.string().url(),
+        })
+      )
+      .default([]),
+  })
 
-  // Section configuration
-  sections: z.array(sectionConfigSchema).default(DEFAULT_SECTIONS),
-})
+  const personalInfoSchema = z.object({
+    firstName: z.string().min(1, messages.firstNameRequired),
+    lastName: z.string().min(1, messages.lastNameRequired),
+    title: z.string().optional(),
+    photo: z.string().optional(),
+    summary: z.string().optional(),
+    contact: contactSchema,
+    // Europass-specific fields
+    dateOfBirth: z.string().optional(),
+    nationality: z.string().optional(),
+    gender: z
+      .enum(["male", "female", "other", "prefer-not-to-say"])
+      .optional(),
+  })
 
-// Export types derived from schemas
+  const experienceEntrySchema = z.object({
+    id: z.string().uuid(),
+    company: z.string().min(1, messages.companyRequired),
+    position: z.string().min(1, messages.positionRequired),
+    location: z.string().optional(),
+    startDate: dateSchema,
+    endDate: dateSchema.nullable(),
+    current: z.boolean().default(false),
+    description: z.string().optional(),
+    achievements: z.array(z.string()).default([]),
+    order: z.number(),
+  })
+
+  const educationEntrySchema = z.object({
+    id: z.string().uuid(),
+    institution: z.string().min(1, messages.institutionRequired),
+    degree: z.string().min(1, messages.degreeRequired),
+    field: z.string().optional(),
+    location: z.string().optional(),
+    startDate: dateSchema,
+    endDate: dateSchema.nullable(),
+    current: z.boolean().default(false),
+    grade: z.string().optional(),
+    description: z.string().optional(),
+    order: z.number(),
+  })
+
+  const skillSchema = z.object({
+    id: z.string().uuid(),
+    name: z.string().min(1, messages.skillNameRequired),
+    level: z
+      .enum(["beginner", "intermediate", "advanced", "expert"])
+      .optional(),
+    category: z.string().optional(),
+    order: z.number(),
+  })
+
+  const languageSchema = z.object({
+    id: z.string().uuid(),
+    name: z.string().min(1, messages.languageNameRequired),
+    proficiency: z.enum(["A1", "A2", "B1", "B2", "C1", "C2", "native"]),
+    order: z.number(),
+  })
+
+  const certificationSchema = z.object({
+    id: z.string().uuid(),
+    name: z.string().min(1, messages.certificationNameRequired),
+    issuer: z.string().min(1, messages.issuerRequired),
+    date: dateSchema,
+    expiryDate: dateSchema.nullable(),
+    credentialId: z.string().optional(),
+    url: urlSchema,
+    order: z.number(),
+  })
+
+  const projectSchema = z.object({
+    id: z.string().uuid(),
+    name: z.string().min(1, messages.projectNameRequired),
+    description: z.string().optional(),
+    url: urlSchema,
+    technologies: z.array(z.string()).default([]),
+    startDate: dateSchema,
+    endDate: dateSchema.nullable(),
+    order: z.number(),
+  })
+
+  const referenceSchema = z.object({
+    id: z.string().uuid(),
+    name: z.string().min(1, messages.referenceNameRequired),
+    position: z.string().optional(),
+    company: z.string().optional(),
+    email: z.string().email().optional(),
+    phone: z.string().optional(),
+    relationship: z.string().optional(),
+    order: z.number(),
+  })
+
+  return z.object({
+    schemaVersion: z.number().default(SCHEMA_VERSION),
+    id: z.string().uuid(),
+    createdAt: z.string().datetime(),
+    updatedAt: z.string().datetime(),
+
+    // Metadata
+    format: cvFormatSchema,
+    template: templateSchema,
+    locale: localeSchema,
+
+    // Content
+    personalInfo: personalInfoSchema,
+    experience: z.array(experienceEntrySchema).default([]),
+    education: z.array(educationEntrySchema).default([]),
+    skills: z.array(skillSchema).default([]),
+    languages: z.array(languageSchema).default([]),
+    certifications: z.array(certificationSchema).default([]),
+    projects: z.array(projectSchema).default([]),
+    references: z.array(referenceSchema).default([]),
+
+    // Section configuration
+    sections: z.array(sectionConfigSchema).default(DEFAULT_SECTIONS),
+  })
+}
+
+// Static schema export (English defaults) — source of truth for all type inference
+export const cvSchema = createCVSchemas(DEFAULT_VALIDATION_MESSAGES)
+
+// Type exports derived from the CV schema
 export type CV = z.infer<typeof cvSchema>
 export type CVFormat = z.infer<typeof cvFormatSchema>
 export type Template = z.infer<typeof templateSchema>
 export type Locale = z.infer<typeof localeSchema>
 export type SectionType = z.infer<typeof sectionTypeSchema>
-export type SectionConfig = z.infer<typeof sectionConfigSchema>
 
-export type PersonalInfo = z.infer<typeof personalInfoSchema>
-export type Contact = z.infer<typeof contactSchema>
-export type ExperienceEntry = z.infer<typeof experienceEntrySchema>
-export type EducationEntry = z.infer<typeof educationEntrySchema>
-export type Skill = z.infer<typeof skillSchema>
-export type Language = z.infer<typeof languageSchema>
-export type Certification = z.infer<typeof certificationSchema>
-export type Project = z.infer<typeof projectSchema>
-export type Reference = z.infer<typeof referenceSchema>
+export type PersonalInfo = CV["personalInfo"]
+export type Contact = PersonalInfo["contact"]
+export type ExperienceEntry = CV["experience"][number]
+export type EducationEntry = CV["education"][number]
+export type Skill = CV["skills"][number]
+export type Language = CV["languages"][number]
+export type Certification = CV["certifications"][number]
+export type Project = CV["projects"][number]
+export type Reference = CV["references"][number]
 
 // Helper type for section content
 export type SectionContent = {
@@ -232,16 +264,20 @@ export type SectionContent = {
   references: Reference[]
 }
 
-// Validation helper
-export function validateCV(data: unknown): {
+// Validation helper — accepts optional localized messages for i18n error output
+export function validateCV(
+  data: unknown,
+  messages?: ValidationMessages
+): {
   success: boolean
   data?: CV
   errors?: Array<{ path: string; message: string }>
 } {
-  const result = cvSchema.safeParse(data)
+  const schema = messages ? createCVSchemas(messages) : cvSchema
+  const result = schema.safeParse(data)
 
   if (result.success) {
-    return { success: true, data: result.data }
+    return { success: true, data: result.data as CV }
   }
 
   const errors = result.error.issues.map((issue) => ({
@@ -251,3 +287,4 @@ export function validateCV(data: unknown): {
 
   return { success: false, errors }
 }
+

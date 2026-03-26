@@ -46,7 +46,10 @@ export function ImportDialog({
 
       try {
         const content = await readFileAsText(file)
-        const importResult = importFromJSON(content)
+        const importResult = importFromJSON(content, {
+          validation: dictionary.cv.validation,
+          errors: t.errors,
+        })
         setResult(importResult)
 
         if (importResult.success && importResult.data) {
@@ -59,7 +62,8 @@ export function ImportDialog({
           errors: [
             {
               path: "",
-              message: error instanceof Error ? error.message : "Import failed",
+              message:
+                error instanceof Error ? error.message : t.errors.importFailed,
             },
           ],
         })
@@ -91,7 +95,7 @@ export function ImportDialog({
       } else {
         setResult({
           success: false,
-          errors: [{ path: "", message: "Please drop a JSON file" }],
+          errors: [{ path: "", message: t.errors.invalidFileType }],
         })
       }
     },

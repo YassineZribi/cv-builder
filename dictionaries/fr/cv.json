@@ -114,5 +114,21 @@
     "to": "à",
     "in": "en",
     "months": ["janv.", "févr.", "mars", "avr.", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."]
+  },
+  "validation": {
+    "dateFormat": "La date doit être au format AAAA-MM",
+    "invalidEmail": "Adresse e-mail invalide",
+    "firstNameRequired": "Le prénom est obligatoire",
+    "lastNameRequired": "Le nom est obligatoire",
+    "companyRequired": "Le nom de l'entreprise est obligatoire",
+    "positionRequired": "Le poste est obligatoire",
+    "institutionRequired": "Le nom de l'établissement est obligatoire",
+    "degreeRequired": "Le diplôme est obligatoire",
+    "skillNameRequired": "Le nom de la compétence est obligatoire",
+    "languageNameRequired": "Le nom de la langue est obligatoire",
+    "certificationNameRequired": "Le nom de la certification est obligatoire",
+    "issuerRequired": "L'organisme émetteur est obligatoire",
+    "projectNameRequired": "Le nom du projet est obligatoire",
+    "referenceNameRequired": "Le nom de la référence est obligatoire"
   }
 }

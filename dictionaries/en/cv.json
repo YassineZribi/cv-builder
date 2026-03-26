@@ -114,5 +114,21 @@
     "to": "to",
     "in": "in",
     "months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+  },
+  "validation": {
+    "dateFormat": "Date must be in YYYY-MM format",
+    "invalidEmail": "Invalid email address",
+    "firstNameRequired": "First name is required",
+    "lastNameRequired": "Last name is required",
+    "companyRequired": "Company name is required",
+    "positionRequired": "Position is required",
+    "institutionRequired": "Institution name is required",
+    "degreeRequired": "Degree is required",
+    "skillNameRequired": "Skill name is required",
+    "languageNameRequired": "Language name is required",
+    "certificationNameRequired": "Certification name is required",
+    "issuerRequired": "Issuer is required",
+    "projectNameRequired": "Project name is required",
+    "referenceNameRequired": "Reference name is required"
   }
 }

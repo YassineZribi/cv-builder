@@ -1,10 +1,17 @@
 import type { CV } from "@/lib/cv/schema"
-import { cvSchema, validateCV, SCHEMA_VERSION } from "@/lib/cv/schema"
+import { validateCV, SCHEMA_VERSION } from "@/lib/cv/schema"
+import type { ValidationMessages } from "@/lib/cv/schema"
 
 export interface ImportResult {
   success: boolean
   data?: CV
   errors?: Array<{ path: string; message: string }>
+}
+
+export interface ImportErrorMessages {
+  invalidJson?: string
+  unsupportedVersion?: string
+  importFailed?: string
 }
 
 export function exportToJSON(cv: CV): string {
@@ -24,7 +31,20 @@ export function downloadJSON(cv: CV, filename: string) {
   URL.revokeObjectURL(url)
 }
 
-export function importFromJSON(jsonString: string): ImportResult {
+export function importFromJSON(
+  jsonString: string,
+  messages?: {
+    validation?: ValidationMessages
+    errors?: ImportErrorMessages
+  }
+): ImportResult {
+  const errorMsgs = {
+    invalidJson: messages?.errors?.invalidJson ?? "Invalid JSON format",
+    unsupportedVersion:
+      messages?.errors?.unsupportedVersion ?? "Unsupported schema version",
+    importFailed: messages?.errors?.importFailed ?? "Unknown error occurred",
+  }
+
   try {
     const parsed = JSON.parse(jsonString)
 
@@ -37,7 +57,7 @@ export function importFromJSON(jsonString: string): ImportResult {
           errors: [
             {
               path: "schemaVersion",
-              message: `Unsupported schema version: ${parsed.schemaVersion}`,
+              message: `${errorMsgs.unsupportedVersion}: ${parsed.schemaVersion}`,
             },
           ],
         }
@@ -45,13 +65,13 @@ export function importFromJSON(jsonString: string): ImportResult {
       parsed.schemaVersion = SCHEMA_VERSION
     }
 
-    // Validate with Zod
-    return validateCV(parsed)
+    // Validate with Zod (using localized messages if provided)
+    return validateCV(parsed, messages?.validation)
   } catch (error) {
     if (error instanceof SyntaxError) {
       return {
         success: false,
-        errors: [{ path: "", message: "Invalid JSON format" }],
+        errors: [{ path: "", message: errorMsgs.invalidJson }],
       }
     }
     return {
@@ -60,7 +80,7 @@ export function importFromJSON(jsonString: string): ImportResult {
         {
           path: "",
           message:
-            error instanceof Error ? error.message : "Unknown error occurred",
+            error instanceof Error ? error.message : errorMsgs.importFailed,
         },
       ],
     }
