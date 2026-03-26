@@ -9,6 +9,12 @@ interface GeneratePDFOptions {
     dates: { present: string; to: string }
     proficiency: Record<string, string>
     skillLevel: Record<string, string>
+    europass: {
+      dateOfBirth: string
+      nationality: string
+      gender: string
+      genderValues: Record<string, string>
+    }
   }
 }
 

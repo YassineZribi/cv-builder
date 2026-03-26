@@ -3,6 +3,7 @@ import {
   Page,
   View,
   Text,
+  Image,
   StyleSheet,
   Font,
 } from "@react-pdf/renderer"
@@ -25,6 +26,12 @@ interface CVDocumentProps {
     dates: { present: string; to: string }
     proficiency: Record<string, string>
     skillLevel: Record<string, string>
+    europass: {
+      dateOfBirth: string
+      nationality: string
+      gender: string
+      genderValues: Record<string, string>
+    }
   }
 }
 
@@ -53,46 +60,76 @@ export function CVDocument({ cv, labels }: CVDocumentProps) {
         {/* Header */}
         {visibleSections.includes("personalInfo") && (
           <View style={styles.header}>
-            <Text style={styles.name}>
-              {cv.personalInfo.firstName} {cv.personalInfo.lastName}
-            </Text>
-            {cv.personalInfo.title && (
-              <Text style={styles.title}>{cv.personalInfo.title}</Text>
-            )}
-            <View style={styles.contactRow}>
-              {cv.personalInfo.contact.email && (
-                <Text style={styles.contactItem}>
-                  {cv.personalInfo.contact.email}
+            <View style={styles.headerContent}>
+              <View style={styles.headerText}>
+                <Text style={styles.name}>
+                  {cv.personalInfo.firstName} {cv.personalInfo.lastName}
                 </Text>
-              )}
-              {cv.personalInfo.contact.phone && (
-                <Text style={styles.contactItem}>
-                  {cv.personalInfo.contact.phone}
-                </Text>
-              )}
-              {cv.personalInfo.contact.city && (
-                <Text style={styles.contactItem}>
-                  {cv.personalInfo.contact.city}
-                  {cv.personalInfo.contact.country &&
-                    `, ${cv.personalInfo.contact.country}`}
-                </Text>
-              )}
-            </View>
-            {(cv.personalInfo.contact.linkedin ||
-              cv.personalInfo.contact.github) && (
-              <View style={styles.contactRow}>
-                {cv.personalInfo.contact.linkedin && (
-                  <Text style={styles.contactItem}>
-                    {cv.personalInfo.contact.linkedin}
-                  </Text>
+                {cv.personalInfo.title && (
+                  <Text style={styles.title}>{cv.personalInfo.title}</Text>
                 )}
-                {cv.personalInfo.contact.github && (
-                  <Text style={styles.contactItem}>
-                    {cv.personalInfo.contact.github}
-                  </Text>
+                <View style={styles.contactRow}>
+                  {cv.personalInfo.contact.email && (
+                    <Text style={styles.contactItem}>
+                      {cv.personalInfo.contact.email}
+                    </Text>
+                  )}
+                  {cv.personalInfo.contact.phone && (
+                    <Text style={styles.contactItem}>
+                      {cv.personalInfo.contact.phone}
+                    </Text>
+                  )}
+                  {cv.personalInfo.contact.city && (
+                    <Text style={styles.contactItem}>
+                      {cv.personalInfo.contact.city}
+                      {cv.personalInfo.contact.country &&
+                        `, ${cv.personalInfo.contact.country}`}
+                    </Text>
+                  )}
+                </View>
+                {(cv.personalInfo.contact.linkedin ||
+                  cv.personalInfo.contact.github) && (
+                  <View style={styles.contactRow}>
+                    {cv.personalInfo.contact.linkedin && (
+                      <Text style={styles.contactItem}>
+                        {cv.personalInfo.contact.linkedin}
+                      </Text>
+                    )}
+                    {cv.personalInfo.contact.github && (
+                      <Text style={styles.contactItem}>
+                        {cv.personalInfo.contact.github}
+                      </Text>
+                    )}
+                  </View>
+                )}
+                {cv.format === "european" &&
+                  (cv.personalInfo.dateOfBirth || cv.personalInfo.nationality || cv.personalInfo.gender) && (
+                  <View style={styles.contactRow}>
+                    {cv.personalInfo.dateOfBirth && (
+                      <Text style={styles.contactItem}>
+                        {labels.europass.dateOfBirth}: {cv.personalInfo.dateOfBirth}
+                      </Text>
+                    )}
+                    {cv.personalInfo.nationality && (
+                      <Text style={styles.contactItem}>
+                        {labels.europass.nationality}: {cv.personalInfo.nationality}
+                      </Text>
+                    )}
+                    {cv.personalInfo.gender && (
+                      <Text style={styles.contactItem}>
+                        {labels.europass.gender}: {labels.europass.genderValues[cv.personalInfo.gender]}
+                      </Text>
+                    )}
+                  </View>
                 )}
               </View>
-            )}
+              {cv.format === "european" && cv.personalInfo.photo && (
+                <Image
+                  src={cv.personalInfo.photo}
+                  style={styles.photo}
+                />
+              )}
+            </View>
           </View>
         )}
 
@@ -292,6 +329,21 @@ function createStyles(theme: ReturnType<typeof getTemplateTheme>) {
       paddingBottom: 12,
       borderBottomWidth: 2,
       borderBottomColor: theme.colors.primary,
+    },
+    headerContent: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "flex-start",
+    },
+    headerText: {
+      flex: 1,
+    },
+    photo: {
+      width: 72,
+      height: 72,
+      borderRadius: 36,
+      marginLeft: 16,
+      objectFit: "cover",
     },
     name: {
       fontSize: 24,

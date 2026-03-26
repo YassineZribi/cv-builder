@@ -28,6 +28,12 @@ export function usePDFExport({ dictionary }: UsePDFExportOptions) {
         dates: dictionary.cv.dates,
         proficiency: dictionary.cv.proficiency,
         skillLevel: dictionary.cv.skillLevel,
+        europass: {
+          dateOfBirth: dictionary.cv.labels.dateOfBirth,
+          nationality: dictionary.cv.labels.nationality,
+          gender: dictionary.cv.labels.gender,
+          genderValues: dictionary.cv.gender,
+        },
       }
 
       const blob = await generatePDF({ cv, labels })

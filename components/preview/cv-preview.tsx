@@ -47,40 +47,73 @@ export function CVPreview({ cv, template, dictionary }: CVPreviewProps) {
       {/* Header / Personal Info */}
       {visibleSections.includes("personalInfo") && (
         <header className={cn("px-8 py-6", templateStyles.header)}>
-          <h1
-            className={cn("text-2xl font-bold", templateStyles.name)}
-          >
-            {cv.personalInfo.firstName} {cv.personalInfo.lastName}
-          </h1>
-          {cv.personalInfo.title && (
-            <p className={cn("text-lg mt-1", templateStyles.title)}>
-              {cv.personalInfo.title}
-            </p>
-          )}
-          <div
-            className={cn(
-              "flex flex-wrap gap-x-4 gap-y-1 mt-3 text-sm",
-              templateStyles.contact
-            )}
-          >
-            {cv.personalInfo.contact.email && (
-              <span>{cv.personalInfo.contact.email}</span>
-            )}
-            {cv.personalInfo.contact.phone && (
-              <span>{cv.personalInfo.contact.phone}</span>
-            )}
-            {cv.personalInfo.contact.city && (
-              <span>
-                {cv.personalInfo.contact.city}
-                {cv.personalInfo.contact.country &&
-                  `, ${cv.personalInfo.contact.country}`}
-              </span>
-            )}
-            {cv.personalInfo.contact.linkedin && (
-              <span>{cv.personalInfo.contact.linkedin}</span>
-            )}
-            {cv.personalInfo.contact.github && (
-              <span>{cv.personalInfo.contact.github}</span>
+          <div className="flex items-start justify-between gap-6">
+            <div className="flex-1 min-w-0">
+              <h1
+                className={cn("text-2xl font-bold", templateStyles.name)}
+              >
+                {cv.personalInfo.firstName} {cv.personalInfo.lastName}
+              </h1>
+              {cv.personalInfo.title && (
+                <p className={cn("text-lg mt-1", templateStyles.title)}>
+                  {cv.personalInfo.title}
+                </p>
+              )}
+              <div
+                className={cn(
+                  "flex flex-wrap gap-x-4 gap-y-1 mt-3 text-sm",
+                  templateStyles.contact
+                )}
+              >
+                {cv.personalInfo.contact.email && (
+                  <span>{cv.personalInfo.contact.email}</span>
+                )}
+                {cv.personalInfo.contact.phone && (
+                  <span>{cv.personalInfo.contact.phone}</span>
+                )}
+                {cv.personalInfo.contact.city && (
+                  <span>
+                    {cv.personalInfo.contact.city}
+                    {cv.personalInfo.contact.country &&
+                      `, ${cv.personalInfo.contact.country}`}
+                  </span>
+                )}
+                {cv.personalInfo.contact.linkedin && (
+                  <span>{cv.personalInfo.contact.linkedin}</span>
+                )}
+                {cv.personalInfo.contact.github && (
+                  <span>{cv.personalInfo.contact.github}</span>
+                )}
+              </div>
+              {cv.format === "european" && (
+                (cv.personalInfo.dateOfBirth || cv.personalInfo.nationality || cv.personalInfo.gender) && (
+                  <div className={cn("flex flex-wrap gap-x-4 gap-y-1 mt-2 text-sm", templateStyles.contact)}>
+                    {cv.personalInfo.dateOfBirth && (
+                      <span>
+                        {cvLabels.labels.dateOfBirth}: {cv.personalInfo.dateOfBirth}
+                      </span>
+                    )}
+                    {cv.personalInfo.nationality && (
+                      <span>
+                        {cvLabels.labels.nationality}: {cv.personalInfo.nationality}
+                      </span>
+                    )}
+                    {cv.personalInfo.gender && (
+                      <span>
+                        {cvLabels.labels.gender}: {cvLabels.gender[cv.personalInfo.gender]}
+                      </span>
+                    )}
+                  </div>
+                )
+              )}
+            </div>
+            {cv.format === "european" && cv.personalInfo.photo && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={cv.personalInfo.photo}
+                alt={`${cv.personalInfo.firstName} ${cv.personalInfo.lastName}`}
+                className="h-24 w-24 shrink-0 rounded-full object-cover border-2 border-white/20"
+              />
             )}
           </div>
         </header>

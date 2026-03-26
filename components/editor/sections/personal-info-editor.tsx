@@ -1,14 +1,14 @@
 "use client"
 
-import { useCallback } from "react"
+import { useCallback, useRef } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import { Button } from "@/components/ui/button"
 import {
   Field,
   FieldLabel,
   FieldGroup,
-  FieldError,
 } from "@/components/ui/field"
 import {
   Select,
@@ -21,6 +21,13 @@ import { useCVStore, selectPersonalInfo, selectFormat } from "@/lib/store/cv-sto
 import type { Dictionary } from "@/lib/i18n/dictionaries"
 import type { Locale } from "@/lib/i18n/config"
 import type { PersonalInfo } from "@/lib/cv/schema"
+import { HugeiconsIcon } from "@hugeicons/react"
+import {
+  UserCircleIcon,
+  Upload01Icon,
+  Cancel01Icon,
+} from "@hugeicons/core-free-icons"
+import { cn } from "@/lib/utils"
 
 interface PersonalInfoEditorProps {
   dictionary: Dictionary
@@ -40,6 +47,7 @@ export function PersonalInfoEditor({
 
   const t = dictionary.cv.labels
   const p = dictionary.cv.placeholders
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   const handleChange = useCallback(
     (field: keyof PersonalInfo) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -64,6 +72,24 @@ export function PersonalInfoEditor({
     },
     [updatePersonalInfo]
   )
+
+  const handlePhotoChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0]
+      if (!file) return
+      const reader = new FileReader()
+      reader.onload = () => {
+        updatePersonalInfo({ photo: reader.result as string })
+      }
+      reader.readAsDataURL(file)
+    },
+    [updatePersonalInfo]
+  )
+
+  const handleRemovePhoto = useCallback(() => {
+    updatePersonalInfo({ photo: "" })
+    if (fileInputRef.current) fileInputRef.current.value = ""
+  }, [updatePersonalInfo])
 
   if (showSummaryOnly) {
     return (
@@ -224,6 +250,66 @@ export function PersonalInfoEditor({
           </CardHeader>
           <CardContent>
             <FieldGroup>
+              {/* Photo upload */}
+              <Field>
+                <FieldLabel>{t.photo}</FieldLabel>
+                <div className="flex items-center gap-4">
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    className={cn(
+                      "relative flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-dashed border-muted-foreground/30 bg-muted/40 transition-colors hover:border-primary/60 hover:bg-muted/60",
+                      personalInfo.photo && "border-solid border-muted"
+                    )}
+                  >
+                    {personalInfo.photo ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={personalInfo.photo}
+                        alt="Profile"
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <HugeiconsIcon icon={UserCircleIcon} className="h-10 w-10 text-muted-foreground/50" />
+                    )}
+                  </button>
+                  <div className="flex flex-col gap-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => fileInputRef.current?.click()}
+                      className="gap-2"
+                    >
+                      <HugeiconsIcon icon={Upload01Icon} className="h-3.5 w-3.5" />
+                      {personalInfo.photo ? "Change photo" : "Upload photo"}
+                    </Button>
+                    {personalInfo.photo && (
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={handleRemovePhoto}
+                        className="gap-2 text-destructive hover:text-destructive"
+                      >
+                        <HugeiconsIcon icon={Cancel01Icon} className="h-3.5 w-3.5" />
+                        Remove
+                      </Button>
+                    )}
+                    <p className="text-xs text-muted-foreground">
+                      JPG, PNG or WEBP. Max 2 MB.
+                    </p>
+                  </div>
+                </div>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  className="hidden"
+                  onChange={handlePhotoChange}
+                />
+              </Field>
+
               <div className="grid grid-cols-2 gap-4">
                 <Field>
                   <FieldLabel>{t.dateOfBirth}</FieldLabel>
