@@ -13,7 +13,7 @@ interface CVDocumentProps {
   cv: CV
   labels: {
     sections: Record<string, string>
-    dates: { present: string; to: string }
+    dates: { present: string; to: string; months: string[] }
     proficiency: Record<string, string>
     skillLevel: Record<string, string>
     europass: {
@@ -37,11 +37,7 @@ export function CVDocument({ cv, labels }: CVDocumentProps) {
   const formatDate = (date: string | null | undefined) => {
     if (!date) return ""
     const [year, month] = date.split("-")
-    const monthNames = [
-      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
-    ]
-    return `${monthNames[parseInt(month, 10) - 1]} ${year}`
+    return `${labels.dates.months[parseInt(month, 10) - 1]} ${year}`
   }
 
   return (

@@ -26,11 +26,7 @@ export function CVPreview({ cv, template, dictionary }: CVPreviewProps) {
   const formatDate = (date: string | null | undefined) => {
     if (!date) return ""
     const [year, month] = date.split("-")
-    const monthNames = [
-      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
-    ]
-    return `${monthNames[parseInt(month, 10) - 1]} ${year}`
+    return `${dictionary.cv.dates.months[parseInt(month, 10) - 1]} ${year}`
   }
 
   const cvLabels = dictionary.cv

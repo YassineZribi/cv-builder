@@ -111,6 +111,7 @@
   },
   "dates": {
     "present": "Present",
-    "to": "to"
+    "to": "to",
+    "months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
   }
 }
