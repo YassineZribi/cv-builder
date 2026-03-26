@@ -2,6 +2,7 @@
 
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useShallow } from "zustand/react/shallow"
 import { useCVStore, selectVisibleSections } from "@/lib/store/cv-store"
 import { PersonalInfoEditor } from "../sections/personal-info-editor"
 import { ExperienceEditor } from "../sections/experience-editor"
@@ -17,7 +18,7 @@ interface FormPanelProps {
 }
 
 export function FormPanel({ dictionary, locale }: FormPanelProps) {
-  const visibleSections = useCVStore(selectVisibleSections)
+  const visibleSections = useCVStore(useShallow(selectVisibleSections))
   const t = dictionary.ui.editor.sections
 
   return (
