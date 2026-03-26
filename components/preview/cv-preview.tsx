@@ -183,7 +183,7 @@ export function CVPreview({ cv, template, dictionary }: CVPreviewProps) {
                     <div>
                       <h3 className="font-semibold">
                         {edu.degree}
-                        {edu.field && ` in ${edu.field}`}
+                        {edu.field && ` ${dictionary.cv.dates.in} ${edu.field}`}
                       </h3>
                       <p className={cn("text-sm", templateStyles.subtitle)}>
                         {edu.institution}

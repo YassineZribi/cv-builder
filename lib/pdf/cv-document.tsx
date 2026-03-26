@@ -17,7 +17,7 @@ interface CVDocumentProps {
   cv: CV
   labels: {
     sections: Record<string, string>
-    dates: { present: string; to: string; months: string[] }
+    dates: { present: string; to: string; in: string; months: string[] }
     proficiency: Record<string, string>
     skillLevel: Record<string, string>
     europass: {
@@ -181,7 +181,7 @@ export function CVDocument({ cv, labels }: CVDocumentProps) {
                   <View>
                     <Text style={styles.itemTitle}>
                       {edu.degree}
-                      {edu.field && ` in ${edu.field}`}
+                      {edu.field && ` ${labels.dates.in} ${edu.field}`}
                     </Text>
                     <Text style={styles.itemSubtitle}>
                       {edu.institution}
