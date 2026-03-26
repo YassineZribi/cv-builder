@@ -5,19 +5,9 @@ import {
   Text,
   Image,
   StyleSheet,
-  Font,
 } from "@react-pdf/renderer"
 import type { CV } from "@/lib/cv/schema"
 import { getTemplateTheme } from "@/lib/templates/themes"
-
-// Register default fonts
-Font.register({
-  family: "Helvetica",
-  fonts: [
-    { src: "Helvetica" },
-    { src: "Helvetica-Bold", fontWeight: "bold" },
-  ],
-})
 
 interface CVDocumentProps {
   cv: CV
@@ -66,7 +56,7 @@ export function CVDocument({ cv, labels }: CVDocumentProps) {
                   {cv.personalInfo.firstName} {cv.personalInfo.lastName}
                 </Text>
                 {cv.personalInfo.title && (
-                  <Text style={styles.title}>{cv.personalInfo.title}</Text>
+                  <Text style={styles.jobTitle}>{cv.personalInfo.title}</Text>
                 )}
                 <View style={styles.contactRow}>
                   {cv.personalInfo.contact.email && (
@@ -315,20 +305,36 @@ export function CVDocument({ cv, labels }: CVDocumentProps) {
 }
 
 function createStyles(theme: ReturnType<typeof getTemplateTheme>) {
+  const m = theme.spacing.pageMargin
+
   return StyleSheet.create({
     page: {
       flexDirection: "column",
       backgroundColor: theme.colors.background,
-      padding: theme.spacing.pageMargin,
+      padding: m,
       fontFamily: theme.fonts.body,
       fontSize: 10,
       color: theme.colors.text,
     },
+
+    // ─── Header ──────────────────────────────────────────────────────────────
     header: {
-      marginBottom: theme.spacing.sectionGap,
-      paddingBottom: 12,
-      borderBottomWidth: 2,
-      borderBottomColor: theme.colors.primary,
+      // Full-bleed background for modern (negative margin bleeds past page padding)
+      ...(theme.header.hasDarkBackground
+        ? {
+            marginTop: -m,
+            marginHorizontal: -m,
+            paddingHorizontal: m,
+            paddingVertical: 24,
+            backgroundColor: theme.colors.headerBackground,
+            marginBottom: theme.spacing.sectionGap,
+          }
+        : {
+            marginBottom: theme.spacing.sectionGap,
+            paddingBottom: 14,
+            borderBottomWidth: theme.header.borderBottomWidth,
+            borderBottomColor: theme.colors.headerBorder,
+          }),
     },
     headerContent: {
       flexDirection: "row",
@@ -346,40 +352,44 @@ function createStyles(theme: ReturnType<typeof getTemplateTheme>) {
       objectFit: "cover",
     },
     name: {
-      fontSize: 24,
+      fontSize: 22,
       fontFamily: theme.fonts.heading,
-      color: theme.colors.primary,
+      color: theme.colors.headerName,
       marginBottom: 4,
     },
-    title: {
-      fontSize: 14,
-      color: theme.colors.muted,
-      marginBottom: 8,
+    jobTitle: {
+      fontSize: 13,
+      color: theme.colors.headerTitle,
+      marginBottom: 6,
     },
     contactRow: {
       flexDirection: "row",
       flexWrap: "wrap",
-      gap: 12,
+      gap: 10,
       marginTop: 4,
     },
     contactItem: {
       fontSize: 9,
-      color: theme.colors.muted,
+      color: theme.colors.headerContact,
     },
+
+    // ─── Section ─────────────────────────────────────────────────────────────
     section: {
       marginBottom: theme.spacing.sectionGap,
     },
     sectionTitle: {
-      fontSize: 12,
+      fontSize: theme.sectionTitle.fontSize,
       fontFamily: theme.fonts.heading,
-      color: theme.colors.primary,
+      color: theme.colors.sectionTitleText,
       marginBottom: 8,
-      paddingBottom: 4,
-      borderBottomWidth: 1,
-      borderBottomColor: theme.colors.accent,
+      paddingBottom: theme.sectionTitle.borderBottomWidth > 0 ? 4 : 0,
+      borderBottomWidth: theme.sectionTitle.borderBottomWidth,
+      borderBottomColor: theme.colors.sectionTitleBorder,
       textTransform: "uppercase",
-      letterSpacing: 1,
+      letterSpacing: theme.sectionTitle.letterSpacing,
     },
+
+    // ─── Items ────────────────────────────────────────────────────────────────
     item: {
       marginBottom: theme.spacing.itemGap,
     },
@@ -391,7 +401,7 @@ function createStyles(theme: ReturnType<typeof getTemplateTheme>) {
     itemTitle: {
       fontSize: 11,
       fontFamily: theme.fonts.heading,
-      color: theme.colors.secondary,
+      color: theme.colors.itemTitle,
     },
     itemSubtitle: {
       fontSize: 10,
@@ -419,6 +429,8 @@ function createStyles(theme: ReturnType<typeof getTemplateTheme>) {
       marginBottom: 2,
       paddingLeft: 8,
     },
+
+    // ─── Skills ───────────────────────────────────────────────────────────────
     skillsContainer: {
       flexDirection: "row",
       flexWrap: "wrap",
@@ -426,11 +438,17 @@ function createStyles(theme: ReturnType<typeof getTemplateTheme>) {
     },
     skillBadge: {
       fontSize: 9,
-      backgroundColor: "#f0f0f0",
+      backgroundColor: theme.colors.skillBadgeBackground,
+      color: theme.colors.skillBadgeText,
       paddingHorizontal: 8,
       paddingVertical: 4,
       borderRadius: 4,
+      ...(theme.colors.skillBadgeBorder
+        ? { borderWidth: 1, borderColor: theme.colors.skillBadgeBorder }
+        : {}),
     },
+
+    // ─── Languages ────────────────────────────────────────────────────────────
     languagesGrid: {
       flexDirection: "row",
       flexWrap: "wrap",
@@ -449,6 +467,8 @@ function createStyles(theme: ReturnType<typeof getTemplateTheme>) {
       fontSize: 9,
       color: theme.colors.muted,
     },
+
+    // ─── Certifications ───────────────────────────────────────────────────────
     certItem: {
       marginBottom: 6,
     },
@@ -456,6 +476,8 @@ function createStyles(theme: ReturnType<typeof getTemplateTheme>) {
       fontSize: 10,
       fontFamily: theme.fonts.heading,
     },
+
+    // ─── References ───────────────────────────────────────────────────────────
     referencesGrid: {
       flexDirection: "row",
       flexWrap: "wrap",
