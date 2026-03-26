@@ -5,9 +5,13 @@ import {
   Text,
   Image,
   StyleSheet,
+  Font,
 } from "@react-pdf/renderer"
 import type { CV } from "@/lib/cv/schema"
 import { getTemplateTheme } from "@/lib/templates/themes"
+
+// Disable automatic hyphenation — wrap whole words instead of splitting them
+Font.registerHyphenationCallback((word) => [word])
 
 interface CVDocumentProps {
   cv: CV
