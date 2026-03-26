@@ -23,15 +23,15 @@ export function EditorShell({ dictionary, locale }: EditorShellProps) {
       <div className="flex-1 overflow-hidden">
         <ResizablePanelGroup orientation="horizontal" className="h-full">
           <ResizablePanel
-            defaultSize={40}
-            minSize={30}
-            maxSize={50}
+            defaultSize="50%"
+            minSize="30%"
+            maxSize="60%"
             className="bg-background"
           >
             <FormPanel dictionary={dictionary} locale={locale} />
           </ResizablePanel>
           <ResizableHandle withHandle />
-          <ResizablePanel defaultSize={60} minSize={40} className="bg-muted/50">
+          <ResizablePanel defaultSize="50%" minSize="40%" className="bg-muted/50">
             <PreviewPanel dictionary={dictionary} locale={locale} />
           </ResizablePanel>
         </ResizablePanelGroup>
