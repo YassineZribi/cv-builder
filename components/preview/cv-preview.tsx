@@ -252,9 +252,10 @@ export function CVPreview({ cv, template, dictionary }: CVPreviewProps) {
             </h2>
             <div className="grid grid-cols-2 gap-x-8 gap-y-1">
               {cv.languages.map((lang) => (
-                <div key={lang.id} className="flex items-center justify-between text-sm">
+                <div key={lang.id} className="flex items-center gap-2 text-sm">
                   <span className="font-medium">{lang.name}</span>
-                  <span className="text-muted-foreground ml-3 shrink-0">
+                  <span className="text-muted-foreground/40 select-none">·</span>
+                  <span className="text-muted-foreground shrink-0">
                     {dictionary.cv.proficiency[lang.proficiency]}
                   </span>
                 </div>

@@ -229,6 +229,7 @@ export function CVDocument({ cv, labels }: CVDocumentProps) {
               {cv.languages.map((lang) => (
                 <View key={lang.id} style={styles.languageItem}>
                   <Text style={styles.languageName}>{lang.name}</Text>
+                  <Text style={styles.languageDot}>·</Text>
                   <Text style={styles.languageLevel}>
                     {labels.proficiency[lang.proficiency]}
                   </Text>
@@ -459,7 +460,13 @@ function createStyles(theme: ReturnType<typeof getTemplateTheme>) {
     languageItem: {
       width: "45%",
       flexDirection: "row",
-      justifyContent: "space-between",
+      alignItems: "center",
+      gap: 4,
+    },
+    languageDot: {
+      fontSize: 9,
+      color: theme.colors.muted,
+      opacity: 0.5,
     },
     languageName: {
       fontSize: 10,
