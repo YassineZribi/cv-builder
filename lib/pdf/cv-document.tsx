@@ -396,12 +396,13 @@ function createStyles(theme: ReturnType<typeof getTemplateTheme>) {
     itemHeader: {
       flexDirection: "row",
       justifyContent: "space-between",
-      marginBottom: 4,
+      marginBottom: 2,
     },
     itemTitle: {
       fontSize: 11,
       fontFamily: theme.fonts.heading,
       color: theme.colors.itemTitle,
+      marginBottom: 2,
     },
     itemSubtitle: {
       fontSize: 10,
