@@ -250,11 +250,11 @@ export function CVPreview({ cv, template, dictionary }: CVPreviewProps) {
             <h2 className={templateStyles.sectionTitle}>
               {dictionary.ui.editor.sections.languages}
             </h2>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-x-8 gap-y-1">
               {cv.languages.map((lang) => (
-                <div key={lang.id} className="flex justify-between text-sm">
+                <div key={lang.id} className="flex items-center justify-between text-sm">
                   <span className="font-medium">{lang.name}</span>
-                  <span className="text-muted-foreground">
+                  <span className="text-muted-foreground ml-3 shrink-0">
                     {dictionary.cv.proficiency[lang.proficiency]}
                   </span>
                 </div>
