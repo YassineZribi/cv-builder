@@ -352,7 +352,7 @@ function getTemplateStyles(template: Template) {
         title: "text-gray-300",
         contact: "text-gray-300",
         sectionTitle:
-          "text-lg font-bold text-gray-900 border-b-2 border-blue-500 pb-1 mb-3",
+          "text-lg font-bold text-gray-900 uppercase border-b-2 border-blue-500 pb-1 mb-3",
         subtitle: "text-gray-600",
         skillBadge: "bg-blue-100 text-blue-800",
       }
