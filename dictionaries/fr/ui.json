@@ -10,70 +10,70 @@
     "next": "Suivant",
     "loading": "Chargement...",
     "error": "Erreur",
-    "success": "Succes",
+    "success": "Succès",
     "required": "Obligatoire",
     "optional": "Facultatif"
   },
   "nav": {
     "home": "Accueil",
-    "editor": "Editeur",
-    "templates": "Modeles",
-    "settings": "Parametres"
+    "editor": "Éditeur",
+    "templates": "Modèles",
+    "settings": "Paramètres"
   },
   "editor": {
-    "title": "Editeur de CV",
+    "title": "Éditeur de CV",
     "toolbar": {
       "newCV": "Nouveau CV",
       "import": "Importer",
       "export": "Exporter",
       "exportPDF": "Exporter PDF",
       "exportJSON": "Exporter JSON",
-      "template": "Modele",
+      "template": "Modèle",
       "format": "Format",
       "language": "Langue",
       "undo": "Annuler",
-      "redo": "Retablir",
-      "preview": "Apercu",
+      "redo": "Rétablir",
+      "preview": "Aperçu",
       "autosaved": "Sauvegarde automatique",
-      "unsavedChanges": "Modifications non enregistrees",
-      "manageSections": "Gerer les sections",
+      "unsavedChanges": "Modifications non enregistrées",
+      "manageSections": "Gérer les sections",
       "manageSectionsDescription": "Afficher ou masquer les sections de votre CV"
     },
     "sections": {
       "personalInfo": "Informations personnelles",
-      "summary": "Resume professionnel",
-      "experience": "Experience professionnelle",
+      "summary": "Résumé professionnel",
+      "experience": "Expérience professionnelle",
       "education": "Formation",
-      "skills": "Competences",
+      "skills": "Compétences",
       "languages": "Langues",
       "certifications": "Certifications",
       "projects": "Projets",
-      "references": "References"
+      "references": "Références"
     },
     "actions": {
-      "addExperience": "Ajouter une experience",
+      "addExperience": "Ajouter une expérience",
       "addEducation": "Ajouter une formation",
-      "addSkill": "Ajouter une competence",
+      "addSkill": "Ajouter une compétence",
       "addLanguage": "Ajouter une langue",
       "addCertification": "Ajouter une certification",
       "addProject": "Ajouter un projet",
-      "addReference": "Ajouter une reference",
+      "addReference": "Ajouter une référence",
       "removeItem": "Supprimer",
-      "dragToReorder": "Glissez pour reorganiser",
-      "toggleVisibility": "Basculer la visibilite"
+      "dragToReorder": "Glissez pour réorganiser",
+      "toggleVisibility": "Basculer la visibilité"
     },
     "empty": {
-      "experience": "Aucune experience ajoutee",
-      "education": "Aucune formation ajoutee",
-      "skills": "Aucune competence ajoutee",
-      "languages": "Aucune langue ajoutee",
-      "certifications": "Aucune certification ajoutee",
-      "projects": "Aucun projet ajoute",
-      "references": "Aucune reference ajoutee"
+      "experience": "Aucune expérience ajoutée",
+      "education": "Aucune formation ajoutée",
+      "skills": "Aucune compétence ajoutée",
+      "languages": "Aucune langue ajoutée",
+      "certifications": "Aucune certification ajoutée",
+      "projects": "Aucun projet ajouté",
+      "references": "Aucune référence ajoutée"
     }
   },
   "format": {
-    "european": "Europeen (Europass)",
+    "european": "Européen (Europass)",
     "canadian": "CV canadien"
   },
   "template": {
@@ -83,24 +83,24 @@
   },
   "import": {
     "title": "Importer un CV",
-    "description": "Telechargez un fichier JSON pour importer vos donnees de CV",
-    "selectFile": "Selectionner un fichier",
-    "dragDrop": "ou glissez-deposez",
+    "description": "Téléchargez un fichier JSON pour importer vos données de CV",
+    "selectFile": "Sélectionner un fichier",
+    "dragDrop": "ou glissez-déposez",
     "fileType": "Fichier JSON uniquement",
-    "success": "CV importe avec succes",
-    "error": "Echec de l'importation du CV",
-    "validationErrors": "Erreurs de validation trouvees"
+    "success": "CV importé avec succès",
+    "error": "Échec de l'importation du CV",
+    "validationErrors": "Erreurs de validation trouvées"
   },
   "export": {
     "title": "Exporter le CV",
-    "description": "Telechargez votre CV dans differents formats",
-    "generating": "Generation du PDF...",
-    "success": "Exportation reussie",
-    "error": "Echec de l'exportation"
+    "description": "Téléchargez votre CV dans différents formats",
+    "generating": "Génération du PDF...",
+    "success": "Exportation réussie",
+    "error": "Échec de l'exportation"
   },
   "validation": {
     "required": "{field} est obligatoire",
-    "invalidEmail": "Adresse email invalide",
+    "invalidEmail": "Adresse e-mail invalide",
     "invalidUrl": "URL invalide",
     "invalidDate": "Format de date invalide"
   }
