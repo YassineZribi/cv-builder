@@ -67,7 +67,7 @@ export function PersonalInfoEditor({
   const handleGenderChange = useCallback(
     (value: string) => {
       updatePersonalInfo({
-        gender: value as PersonalInfo["gender"],
+        gender: value === "__clear__" ? undefined : value as PersonalInfo["gender"],
       })
     },
     [updatePersonalInfo]
@@ -337,6 +337,9 @@ export function PersonalInfoEditor({
                     <SelectValue placeholder="Select gender" />
                   </SelectTrigger>
                   <SelectContent>
+                    <SelectItem value="__clear__" className="text-muted-foreground">
+                      — None —
+                    </SelectItem>
                     <SelectItem value="male">
                       {dictionary.cv.gender.male}
                     </SelectItem>
