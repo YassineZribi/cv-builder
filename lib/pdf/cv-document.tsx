@@ -137,8 +137,8 @@ export function CVDocument({ cv, labels }: CVDocumentProps) {
             <Text style={styles.sectionTitle}>
               {labels.sections.experience}
             </Text>
-            {cv.experience.map((exp) => (
-              <View key={exp.id} style={styles.item}>
+            {cv.experience.map((exp, idx) => (
+              <View key={exp.id} style={[styles.item, idx === cv.experience.length - 1 ? { marginBottom: 0 } : {}]}>
                 <View style={styles.itemHeader}>
                   <View>
                     <Text style={styles.itemTitle}>{exp.position}</Text>
@@ -175,8 +175,8 @@ export function CVDocument({ cv, labels }: CVDocumentProps) {
         {visibleSections.includes("education") && cv.education.length > 0 && (
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>{labels.sections.education}</Text>
-            {cv.education.map((edu) => (
-              <View key={edu.id} style={styles.item}>
+            {cv.education.map((edu, idx) => (
+              <View key={edu.id} style={[styles.item, idx === cv.education.length - 1 ? { marginBottom: 0 } : {}]}>
                 <View style={styles.itemHeader}>
                   <View>
                     <Text style={styles.itemTitle}>
@@ -246,8 +246,8 @@ export function CVDocument({ cv, labels }: CVDocumentProps) {
               <Text style={styles.sectionTitle}>
                 {labels.sections.certifications}
               </Text>
-              {cv.certifications.map((cert) => (
-                <View key={cert.id} style={styles.certItem}>
+              {cv.certifications.map((cert, idx) => (
+                <View key={cert.id} style={[styles.certItem, idx === cv.certifications.length - 1 ? { marginBottom: 0 } : {}]}>
                   <Text style={styles.certName}>
                     {cert.name}
                     <Text style={styles.textMuted}> - {cert.issuer}</Text>
@@ -262,8 +262,8 @@ export function CVDocument({ cv, labels }: CVDocumentProps) {
         {visibleSections.includes("projects") && cv.projects.length > 0 && (
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>{labels.sections.projects}</Text>
-            {cv.projects.map((project) => (
-              <View key={project.id} style={styles.item}>
+            {cv.projects.map((project, idx) => (
+              <View key={project.id} style={[styles.item, idx === cv.projects.length - 1 ? { marginBottom: 0 } : {}]}>
                 <Text style={styles.itemTitle}>{project.name}</Text>
                 {project.description && (
                   <Text style={styles.text}>{project.description}</Text>
