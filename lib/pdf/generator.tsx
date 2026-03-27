@@ -6,7 +6,7 @@ interface GeneratePDFOptions {
   cv: CV
   labels: {
     sections: Record<string, string>
-    dates: { present: string; to: string }
+    dates: { present: string; to: string; in: string; months: string[] }
     proficiency: Record<string, string>
     skillLevel: Record<string, string>
     europass: {
