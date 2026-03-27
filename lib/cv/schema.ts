@@ -90,7 +90,7 @@ function createCVSchemas(messages: ValidationMessages) {
     .regex(/^\d{4}-\d{2}$/, messages.dateFormat)
     .optional()
 
-  const urlSchema = z.string().url().optional().or(z.literal(""))
+  const urlSchema = z.string().optional().or(z.literal(""))
 
   const contactSchema = z.object({
     email: z.string().email(messages.invalidEmail),
@@ -134,7 +134,7 @@ function createCVSchemas(messages: ValidationMessages) {
     position: z.string().min(1, messages.positionRequired),
     location: z.string().optional(),
     startDate: dateSchema,
-    endDate: dateSchema.nullable(),
+    endDate: dateSchema.nullable().optional().or(z.literal("")),
     current: z.boolean().default(false),
     description: z.string().optional(),
     achievements: z.array(z.string()).default([]),
@@ -148,7 +148,7 @@ function createCVSchemas(messages: ValidationMessages) {
     field: z.string().optional(),
     location: z.string().optional(),
     startDate: dateSchema,
-    endDate: dateSchema.nullable(),
+    endDate: dateSchema.nullable().optional().or(z.literal("")),
     current: z.boolean().default(false),
     grade: z.string().optional(),
     description: z.string().optional(),
@@ -177,7 +177,7 @@ function createCVSchemas(messages: ValidationMessages) {
     name: z.string().min(1, messages.certificationNameRequired),
     issuer: z.string().min(1, messages.issuerRequired),
     date: dateSchema,
-    expiryDate: dateSchema.nullable(),
+    expiryDate: dateSchema.nullable().optional().or(z.literal("")),
     credentialId: z.string().optional(),
     url: urlSchema,
     order: z.number(),
@@ -190,7 +190,7 @@ function createCVSchemas(messages: ValidationMessages) {
     url: urlSchema,
     technologies: z.array(z.string()).default([]),
     startDate: dateSchema,
-    endDate: dateSchema.nullable(),
+    endDate: dateSchema.nullable().optional().or(z.literal("")),
     order: z.number(),
   })
 
